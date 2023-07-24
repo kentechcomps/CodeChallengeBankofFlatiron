@@ -1,34 +1,53 @@
 import React , {useState} from "react";
 
 const TransactionForm = ({ onAddTransaction }) => {
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      // Create a new transaction object
-      const newTransaction = {
-        description,
-        amount: parseFloat(amount),
-      };
-  
+    const [Addform, setAddform] = useState({
+       date : "",
+       description : "", 
+       amount : ""
+    })
+
+    const handlechange = (event)=>{
+      const{name, value} = event.target
+      setAddform({
+        ...Addform,
+        [name]: value
+      })
+    }
     
-      onAddTransaction(newTransaction);
-  
-      // Clear the form fields
-      setDescription('');
-      setAmount('');
-    };
+    const handleSubmit = (event)=>{
+        event.preventDefault();
+       const newformdate = {
+        ...Addform,
+        amount : parseFloat(Addform.amount)
+       }
+      
+       onAddTransaction(newformdate);
+       setAddform({
+          date : '' ,
+          description : '' ,
+          amount : ''
+       })
+
+
+    }
+   
+    
     return (
         <form onSubmit={handleSubmit}>
+
+          <label>
+            Date:
+            <input type="date" name="date" value={Addform.date} onChange= {handlechange}/>
+          </label>
+            
           <label>
             Description:
-            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input type="text" name="description" value={Addform.description} onChange={handlechange} />
           </label>
           <label>
             Amount:
-            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <input type="number" name="amount" value={Addform.amount} onChange={handlechange} />
           </label>
           <button type="submit">Add Transaction</button>
         </form>

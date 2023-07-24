@@ -1,7 +1,7 @@
 import Mytable from "./Transactiontable"
 
 export default function Transaction({transaction}){
-    console.log(transaction);
+    
     return(
         <div>
         

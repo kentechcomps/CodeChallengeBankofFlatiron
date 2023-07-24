@@ -4,28 +4,28 @@ import React ,{useState ,useEffect} from 'react';
 import TransactionForm from "./Myform.js"
 import Mytable from "./Transactiontable.js"
 import Transaction from './Transaction';
-import Transactionsdata from "./transactiondata.json"
-
-
-
 
 function App() {
 
  //state to manage terms
-  const [transactions, setTransactions] = useState([]);
+  const [Transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
- 
-  console.log(Transactionsdata);
-  
-  useEffect(()=>{
-    setTransactions(Transactionsdata.transactions)
-  }, [])
 
-  // Function to add a new transaction to the list
-  // const handleAddTransaction = (newTransaction) => {
-  //   setTransactions([...Transactionsdata, newTransaction]);
-  // };
+
+  useEffect(()=>{
+   fetch("http://localhost:5001/transactions")
+   .then ((resp) => resp.json())
+   .then ((data)=>{
+    
+    setTransactions(data)
+    
+  })
+   }, [])
+  //Function to add a new transaction to the list
+  const handleAddTransaction = (newformdate) => {
+    setTransactions([...Transactions, newformdate]);
+  };
   
    // Function to handle the search input change
    const handleSearchChange = (e) => {
@@ -43,11 +43,13 @@ function App() {
   return (
     <div className="App">
       <h1>Transaction Tracker</h1>
-    
-      <Transaction transaction={transactions} />
-      <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search by description" />
-      {/* <TransactionForm  transactions={filteredTransactions} /> */}
-  
+        {/* <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search by description" /> */}
+      <TransactionForm 
+      onAddTransaction={handleAddTransaction}
+       />
+      { <Transaction transaction={Transactions} /> }
+      {/* transactions={filteredTransactions} */}
+      
     </div>
   );
 }
