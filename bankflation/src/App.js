@@ -14,7 +14,7 @@ function App() {
 
 
   useEffect(()=>{
-   fetch("http://localhost:5001/transactions")
+   fetch("https://ken-sxhw.onrender.com/transactions")
    .then ((resp) => resp.json())
    .then ((data)=>{
     
@@ -31,23 +31,21 @@ function App() {
    const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
-   // Filter transactions based on the search term
-  //  const filteredTransactions = transactions.filter((transaction) =>
-  //  transaction.description.toLowerCase().includes(searchTerm.toLowerCase()));
-
-   
-    
-
+  // Filter transactions based on the search term
+   const filteredTransactions = Transactions.filter((transaction) =>
+   transaction.description.toLowerCase().includes(searchTerm.toLowerCase()));
+   useEffect(()=>{
+      setTransactions(filteredTransactions)
+   }, [Transaction])
 
   return (
     <div className="App">
       <h1>Transaction Tracker</h1>
-        {/* <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search by description" /> */}
+         <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search by description" /> 
       <TransactionForm 
       onAddTransaction={handleAddTransaction}
        />
-      { <Transaction transaction={Transactions} /> }
+       <Transaction transaction={filteredTransactions} /> 
       {/* transactions={filteredTransactions} */}
       
     </div>
