@@ -8,6 +8,7 @@ const Mytable = ({date, description, amount, category})=>{
           <td>{date}</td>
           <td>{description}</td>
           <td>{amount}</td>
+          <td>{category}</td>
         </tr>
 
    ) 

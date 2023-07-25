@@ -11,16 +11,16 @@ export default function Transaction({transaction}){
             <th>Date</th>
             <th>Description</th>
             <th>Amount</th>
+            <th>Category</th>
+
           </tr>
         
           {transaction.map((item) => (
-            <Mytable key={item.id}
-                        
+            <Mytable key={item.id}            
             date ={item.date}
             category ={item.category}
             description= {item.description}
             amount = {item.amount}
-            
             />
             
           ))}
